@@ -2,19 +2,20 @@
 
 This is a relatively generalized Rust setup for advent of code. The input data for each challenge is fetched and cached locally.
 
-To set up:
+## To set up:
 
 1. Clone repo
 2. Install rust (see https://www.rust-lang.org/tools/install)
 3. Copy the value of the Advent of Code session cookie from your [browser's devtools](https://developer.chrome.com/docs/devtools/storage/cookies/).
 4. Add that value with no whitespace to a new file "session_cookie.txt" in the root of the directory. (e.g. `echo -n "$cookie_value" > session_cookie.txt`)
 5. Execute `cargo run -- 1` from directory root to execute the challenge for day 1.
+6. Bootstrapped files also have a "part_two" boolean you can use to handle the second part of the challenge. Just pass --p2 or --part-two to set it to true -- this way you can keep both versions of the code :)
 
-To bootstrap a new day:
+## To bootstrap a new day:
 
 Run `./bin/add-day.sh $day`, where `$day` is a number. This will bootstrap everything and should compile immediately. You can optionally pass another argument to set the function name, like `./bin/add-day.sh 10 fun_holidays`. You can keep the default naming scheme or use something that describes the challenge at hand :)
 
-To add a new year:
+## To add a new year:
 
 1. Create a new year directory like y2023. (Should follow this same format.)
 2. Copy the mod.rs file from an existing year to this new directory.

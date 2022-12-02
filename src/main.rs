@@ -23,7 +23,9 @@ async fn main() {
     }
 
     println!("Running exercise...\n");
-    let result = y2022::run_day(day, &input);
+    // Use "--p2" or "--part-two" to show we've moved on to the next part.
+    let is_part_two = has_arg("--part-two") || has_arg("--p2");
+    let result = y2022::run_day(day, &input, is_part_two);
 
     if result.is_empty() {
         println!("Result is empty!");

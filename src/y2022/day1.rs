@@ -1,4 +1,4 @@
-pub fn elves_by_food(input: &String) -> String {
+pub fn elves_by_food(input: &String, _part_two: bool) -> String {
     let sections = input.split("\n");
 
     // Save food groupings.

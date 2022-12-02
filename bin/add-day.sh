@@ -38,7 +38,6 @@ if grep "$dayname" "$mod_file"; then
 	exit 1
 fi
 
-
 ### IMPORTANT: -i '' and [[:space:]] are for macOS compatibility and do not work on Linux D:
 
 # Firstly, insert mod statement before "run_day"
@@ -46,5 +45,5 @@ mod_code="mod $dayname;"
 sed -i '' "s/^[[:space:]]*pub fn run_day/$mod_code\n&/" "$mod_file"
 
 # Secondly, insert case code before "_ =>"
-case_code="        $day => $dayname::$func_name(input),"
+case_code="        $day => $dayname::$func_name(input, part_two),"
 sed -i '' "s/^[[:space:]]*_ =/$case_code\n&/" "$mod_file" 
