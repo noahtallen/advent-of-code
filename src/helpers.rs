@@ -41,7 +41,6 @@ async fn get_aoc_input_from_remote(day: u16) -> String {
         return result.text().await.expect("Could not parse response text.");
     } else {
         println!("Data fetch unsuccessful! Code: {}.", status.as_u16());
-        println!("Double check you are authenticated.");
         process::exit(1);
     }
 }
