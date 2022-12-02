@@ -11,7 +11,6 @@ fi
 # Find out the year for the challenge.
 year=$(grep "AOC_YEAR" src/main.rs | cut -d = -f 2 | sed 's/;//g' | sed 's/ //g')
 root="$(pwd)/src"
-year=2022
 
 dayname="day$day"
 # Func name can be the second argument, but default to the dayname.
