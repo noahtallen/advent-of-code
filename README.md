@@ -10,9 +10,14 @@ To set up:
 4. Add that value with no whitespace to a new file "session_cookie.txt" in the root of the directory. (e.g. `echo -n "$cookie_value" > session_cookie.txt`)
 5. Execute `cargo run -- 1` from directory root to execute the challenge for day 1.
 
-To add a new day:
+To bootstrap a new day:
 
-1. Create a new file "dayX.rs" in the year directory with a function accepting a string reference and returning a string.
-2. Add `pub mod dayX.rs;` to the `mod.rs` file in the current year directory.
-3. In the same `mod.rs` file, add a case to the `match` statement in the `run_day` function for the new day which calls the new function. Like `2 => day2::day_two(input),`
-4. Since days use the same input, you can output the answers to both parts from the individual day function.
+Run `./bin/add-day.sh $day`, where `$day` is a number. This will bootstrap everything and should compile immediately. You can optionally pass another argument to set the function name, like `./bin/add-day.sh 10 fun_holidays`. You can keep the default naming scheme or use something that describes the challenge at hand :)
+
+To add a new year:
+
+1. Create a new year directory like y2023. (Should follow this same format.)
+2. Copy the mod.rs file from an existing year to this new directory.
+3. Remove the `mod dayX;` lines, as well as everything in the match statement except the base error case. It should then be mostly empty.
+4. Change the year name at the top of `src/main.rs`. (Both AOC_YEAR and the mod line for the year. We don't need to add the module for other years that we won't use.)
+5. Run `./bin/add-day.sh 1` to create the first day file -- this will ultimately update the year's mod.rs file. From here you can just add new days above!
