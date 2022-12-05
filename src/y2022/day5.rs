@@ -15,6 +15,8 @@ pub fn crate_rearrangement(input: &String, part_two: bool) -> String {
     print_stack(&stacks);
 
     let commands = input_sections.next().unwrap();
+
+    // This will execute the instructions, modifying the stacks in place.
     execute_instructions(commands, &mut stacks, part_two);
     println!("\nStacks after rearranging:");
     print_stack(&stacks);
