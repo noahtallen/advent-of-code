@@ -4,12 +4,11 @@ pub fn assignment_checker(input: &String, part_two: bool) -> String {
     input
         .lines()
         .fold(0, |num_overlapping, elf_pair| {
-            // Each line contains assignments for a pair of elves.
-            let (elf_a, elf_b) = elf_pair.rsplit_once(',').unwrap();
-            // Each of those assignments represents a range of numbers.
-            let (elf_a_range, elf_b_range) = (elf_range(elf_a), elf_range(elf_b));
+            // Each line contains assignments for a pair of elves. Each of those
+            // assignments represents a range of numbers.
+            let (elf_a_range, elf_b_range) = input_to_range(elf_pair);
 
-            // We need to determine if the current pair of ranges overlaps.
+            // Determine if the current pair of ranges overlaps according to the challenge rules.
             let has_overlap: bool = if part_two {
                 range_overlap(&elf_a_range, &elf_b_range)
             } else {
@@ -51,10 +50,16 @@ fn range_contains(range_a: &Range<u32>, range_b: &Range<u32>) -> bool {
 }
 
 // Converts a range string (e.g. "1-3") into an actual range type.
-fn elf_range(str_range: &str) -> Range<u32> {
-    let numbers: Vec<u32> = str_range
-        .split('-')
-        .map(|x| x.parse::<u32>().unwrap())
-        .collect();
-    numbers[0]..numbers[1]
+fn input_to_range(range_pair: &str) -> (Range<u32>, Range<u32>) {
+    // Tuple where each element is the elf range.
+    let (elf_a, elf_b) = range_pair.rsplit_once(',').unwrap();
+
+    // Tuple where each element is the start and end of the range.
+    let (a_start, a_end) = elf_a.rsplit_once('-').unwrap();
+    let (b_start, b_end) = elf_b.rsplit_once('-').unwrap();
+
+    // Convert the strings to numbers and then to a range:
+    let a_range = a_start.parse::<u32>().unwrap()..a_end.parse::<u32>().unwrap();
+    let b_range = b_start.parse::<u32>().unwrap()..b_end.parse::<u32>().unwrap();
+    (a_range, b_range)
 }
