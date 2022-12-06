@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashSet, VecDeque};
 
 pub fn fix_comms_device(input: &String, part_two: bool) -> String {
     // In part one, the num of unique chars required is 4. In part two, it's 14.
@@ -11,10 +11,10 @@ pub fn fix_comms_device(input: &String, part_two: bool) -> String {
     let (starter_chars, rest) = input.lines().next().unwrap().split_at(chars_to_check - 1);
 
     // The answer is the first iteration this vec contains unique characters.
-    let mut last_four_chars = starter_chars.chars().collect::<Vec<_>>();
+    let mut last_four_chars = starter_chars.chars().collect::<VecDeque<_>>();
 
     for (position, c) in rest.chars().enumerate() {
-        last_four_chars.push(c);
+        last_four_chars.push_back(c);
 
         if !are_duplicated_letters(&last_four_chars) {
             // Our iteration is offset by the number of chars we collected into
@@ -23,15 +23,15 @@ pub fn fix_comms_device(input: &String, part_two: bool) -> String {
             return (position + chars_to_check).to_string();
         }
 
-        // Update the chars with the new stuff to check.
-        last_four_chars.remove(0);
+        // Remove first char, since it has been completely checked.
+        last_four_chars.pop_front();
     }
 
     return "Did not find non-duplicated groups...".to_string();
 }
 
 // This function looks like O(chars.len()), but since that is always 4, it's constant time.
-fn are_duplicated_letters(chars: &Vec<char>) -> bool {
+fn are_duplicated_letters(chars: &VecDeque<char>) -> bool {
     // Collect the chars into a HashSet, which will remove duplicates.
     let set = chars.iter().collect::<HashSet<_>>();
 
