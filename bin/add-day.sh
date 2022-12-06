@@ -20,7 +20,7 @@ daydir="$root/y$year"
 dayfilename="$daydir/$dayname.rs"
 
 if [ -f "$dayfilename" ]; then
-	echo "Day file already exists for $day." >&2
+	echo "Day file already exists for $day."
 	exit 1
 fi
 
