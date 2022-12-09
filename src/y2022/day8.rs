@@ -1,6 +1,4 @@
 use std::collections::HashSet;
-use std::iter::Rev;
-use std::ops::Range;
 
 pub fn check_tree_visibility(input: &String, _part_two: bool) -> String {
     // Example input, with expected result of 21.
