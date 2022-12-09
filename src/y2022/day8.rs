@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-pub fn check_tree_visibility(input: &String, _part_two: bool) -> String {
+pub fn check_tree_visibility(input: &String, part_two: bool) -> String {
     // Example input, with expected result of 21.
     // let input = "30373
     //              25512
@@ -22,8 +22,61 @@ pub fn check_tree_visibility(input: &String, _part_two: bool) -> String {
         .collect();
 
     println!("Tree size: {}x{}", trees.len(), trees[0].len());
-    let seen_trees = get_visible_trees(&trees);
-    seen_trees.len().to_string()
+    if part_two {
+        get_best_scenic_score(&trees).to_string()
+    } else {
+        let seen_trees = get_visible_trees(&trees);
+        seen_trees.len().to_string()
+    }
+}
+
+fn get_best_scenic_score(trees: &Vec<Vec<i16>>) -> i32 {
+    let mut scores: Vec<i32> = Vec::new();
+
+    // Ideally, fold would work here... But then we don't have the tree indices,
+    // which means we can't use them to start further iterations.
+    for h in 0..trees.len() {
+        for w in 0..trees[0].len() {
+            let tree = trees[h][w];
+
+            let mut num_up = 0;
+            for h2 in (0..h).rev() {
+                num_up += 1;
+                if trees[h2][w] >= tree {
+                    break;
+                }
+            }
+
+            let mut num_down = 0;
+            for h2 in h + 1..trees.len() {
+                num_down += 1;
+                if trees[h2][w] >= tree {
+                    break;
+                }
+            }
+
+            let mut num_right = 0;
+            for w2 in w + 1..trees[0].len() {
+                num_right += 1;
+                if trees[h][w2] >= tree {
+                    break;
+                }
+            }
+
+            let mut num_left = 0;
+            for w2 in (0..w).rev() {
+                num_left += 1;
+                if trees[h][w2] >= tree {
+                    break;
+                }
+            }
+
+            // Save the total score for each iteration
+            scores.push(num_up * num_down * num_right * num_left);
+        }
+    }
+
+    *scores.iter().max().unwrap_or(&0)
 }
 
 fn get_visible_trees(trees: &Vec<Vec<i16>>) -> HashSet<String> {
