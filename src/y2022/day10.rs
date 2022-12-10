@@ -5,9 +5,6 @@ pub fn signal_strength(input: &String, _part_two: bool) -> String {
     // A list of values we've looked at along the way, for part one.
     let mut tracked_signals: Vec<i32> = Vec::new();
 
-    let mut cycle_num = 0;
-
-    // A 64 bit register.
     let mut register_x = 1i32;
 
     // A pending command which needs to be finalized in a future tick.
@@ -17,6 +14,7 @@ pub fn signal_strength(input: &String, _part_two: bool) -> String {
     // One while loop iteration is one CPU tick. Loop indefinitely until the command
     // queue is empty. Since a command can take multiple ticks, we can't just
     // iterate over the commands.
+    let mut cycle_num = 0;
     #[allow(while_true)]
     while true {
         cycle_num += 1;
@@ -81,7 +79,7 @@ fn draw_sprite(sprite_pos: i32, cycle: i32) {
     // Positions are 0 indexed, but cycles are 1 indexed. So we need to adjust slightly.
     let pixel_pos = (cycle - 1) % 40;
 
-    // Is visible if position within one of the pixel position.
+    // Is visible if sprite position is at or within one of the pixel position.
     if sprite_pos - 1 <= pixel_pos && pixel_pos <= sprite_pos + 1 {
         print!("#");
     } else {
