@@ -151,13 +151,6 @@ fn input_to_monkeys(input: &String) -> Vec<Monkey> {
                 Regex::new(r"Monkey (.*):\n.*Starting items: (.*)\n.*Operation: new = (.*)\n.*Test: divisible by (.*)\n.*If true: throw to monkey (.*)\n.*If false: throw to monkey (.*)")
                     .unwrap();
             let reg_cap = monkey_reg.captures(str).unwrap();
-            
-            let monkey_num = reg_cap
-                .get(1)
-                .unwrap()
-                .as_str()
-                .parse::<u128>()
-                .unwrap();
 
             let items_worry: Vec<u128> = reg_cap
                 .get(2)
@@ -167,38 +160,19 @@ fn input_to_monkeys(input: &String) -> Vec<Monkey> {
                 .map(|num| num.trim().parse::<u128>().unwrap())
                 .collect();
 
-            let operation = reg_cap.get(3).unwrap().as_str().to_string();
-
-            let divisible_by = reg_cap
-                .get(4)
-                .unwrap()
-                .as_str()
-                .parse::<u128>()
-                .unwrap();
-
-            let true_to = reg_cap
-                .get(5)
-                .unwrap()
-                .as_str()
-                .parse::<u128>()
-                .unwrap();
-
-            let false_to = reg_cap
-                .get(6)
-                .unwrap()
-                .as_str()
-                .parse::<u128>()
-                .unwrap();
-
             Some(Monkey {
                 items_worry,
-                operation,
-                divisible_by,
-                true_to,
-                false_to,
-                monkey_num,
+                monkey_num: num_from_capture(reg_cap.get(1)),
+                operation: reg_cap.get(3).unwrap().as_str().to_string(),
+                divisible_by: num_from_capture(reg_cap.get(4)),
+                true_to: num_from_capture(reg_cap.get(5)),
+                false_to: num_from_capture(reg_cap.get(6)),
                 times_inspected: 0,
             })
         })
         .collect()
+}
+
+fn num_from_capture(capture: Option<regex::Match>) -> u128 {
+    capture.unwrap().as_str().parse::<u128>().unwrap()
 }
