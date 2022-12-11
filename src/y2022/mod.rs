@@ -12,6 +12,7 @@ mod day7;
 mod day8;
 mod day9;
 mod day10;
+mod day11;
 pub fn run_day(day: u16, input: &String, part_two: bool) -> String {
     match day {
         1 => day1::elves_by_food(input, part_two),
@@ -24,6 +25,7 @@ pub fn run_day(day: u16, input: &String, part_two: bool) -> String {
         8 => day8::check_tree_visibility(input, part_two),
         9 => day9::rope_shenanigans(input, part_two),
         10 => day10::signal_strength(input, part_two),
+        11 => day11::day_11(input, part_two),
         _ => {
             println!("Day {} not implemented yet", day);
             process::exit(1)
