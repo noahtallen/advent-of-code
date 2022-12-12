@@ -1,7 +1,15 @@
 use crate::AOC_YEAR;
 use reqwest::header::COOKIE;
 use std::fs;
+use std::io::{stdin, stdout, Read, Write};
 use std::process;
+
+pub fn pause() {
+    let mut stdout = stdout();
+    stdout.write(b"Press Enter to continue...").unwrap();
+    stdout.flush().unwrap();
+    stdin().read(&mut [0]).unwrap();
+}
 
 pub async fn get_aoc_input(day: u16) -> String {
     if let Ok(input) = read_aoc_input_file(day) {
